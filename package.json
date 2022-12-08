@@ -1,5 +1,5 @@
 {
-  "name": "react-renderers-persistent",
+  "name": "react-renderers-mutation-vs-persistent",
   "private": true,
   "version": "0.0.0",
   "type": "module",
