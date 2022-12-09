@@ -2,23 +2,24 @@ import React, { useRef, useEffect } from "react";
 import ReactReconciler from "react-reconciler";
 import Konva from "konva";
 import { options as commonReconcilerOptions, Dict } from "./common";
-import * as Host from "./HostMutationMethods";
+import * as Host from "./Host";
 
 const HostConfig: any = {
   ...commonReconcilerOptions,
-  createInstance: (type: string, props: Dict, rootContainer: any) => {
-    return Host.createInstance(type, props);
-  },
   appendChildToContainer: (container: any, child: any) => {
+    console.log('append Child to container',{container,child});
     Host.appendChild(container, child);
   },
   appendInitialChild: (parent: any, child: any) => {
+    console.log('append initial child',{parent,child});
     return Host.appendChild(parent, child);
   },
   removeChildFromContainer: (container: any, child: any) => {
+    console.log('remove child from container',{container,child});
     Host.removeChild(container, child);
   },
   removeChild: (parent: any, child: any) => {
+    console.log('removeChild',{parent,child});
     Host.removeChild(parent, child);
   },
   finalizeInitialChildren: (
@@ -31,24 +32,28 @@ const HostConfig: any = {
   supportsMutation: true,
   supportsPersistence: false,
   commitUpdate: (
-    any: any,
+    node: any,
     updatePayload: Dict,
     type: string,
     prevProps: Dict,
     nextProps: Dict
   ) => {
     if (updatePayload) {
-      Host.updateItem(any, updatePayload);
+      console.log('commiting update', {node,updatePayload});
+      Host.updateItem(node, updatePayload);
     }
   },
 
   insertBefore: (parent: any, child: any, beforeChild: any) => {
+    console.log('insert before', {parent,child,beforeChild});
     Host.insertBefore(child, beforeChild, parent);
   },
   insertInContainerBefore: (container: any, child: any, beforeChild: any) => {
+    console.log('insertInContainerBefore', {container,child,beforeChild});
     Host.insertBefore(child, beforeChild, container);
   },
   appendChild: (parent: any, child: any) => {
+    console.log('append child',{parent,child});
     Host.appendChild(parent, child);
   },
 };
